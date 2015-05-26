@@ -1,0 +1,59 @@
+# DIY-BTC-ATM
+#################################################
+Not quite working work in progress.
+I'm making a Bitcoin atm primarily in python to eventually
+be launched as two Raspberry Pi's, one as a server with blockchain credentials,
+and one as a client with GUI capabilities.
+
+Please change the server pass, if you value your security.
+
+So it works off of AES encryption and decryption, and keywords at the start.
+#################################################
+
+v0.4 --{
+
+Added/fixed transacting, transacting actually works.
+
+Added framework for implementation of button lights and such.
+
+Notes -- For some reason displaying the txid isn't working.
+
+[We must have some sort of race because only about half of the time does the
+price check work.]  FIXED before commit.  Connecting the fxn happened late.
+
+}
+v0.3 -- {
+
+Added threading for the occasional price checks.
+
+I better look into issues with fees.  I think I handled it?  Maybe?
+
+Notes - Gotta make state changes a function for lights and stuff still.
+Maybe gotta thread.
+
+Then I gotta start interacting with the physical things.
+
+}
+
+v0.2 -- {
+
+Added a bunch of GUI functionality, OUT of stock and such.
+The way I do it is a bit sloppy but I guess it's fine.
+Just a bit error prone-If a huge spike happens between when a pricecheck happens and a transaction,
+it could end up with issues.  But I'm banking on a spike not being big enough to upset the wiggle limits for price.
+
+I added some more stuff but it was like a weed ago so I can't really remember.
+
+Notes - I've gotta make the state changes a function.
+
+Got to make occasional price checks.  Threading?
+
+Also got to interact with physical input and output.
+Like buttons and bill validators.
+
+}
+v0.1 -- {
+
+Initial upload of what I already had
+
+}
