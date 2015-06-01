@@ -9,8 +9,22 @@ Please change the server pass, if you value your security.
 
 So it works off of AES encryption and decryption, and keywords at the start.
 #################################################
+v1.0 -- {
 
-v0.4 --{
+Hey it's actually fully working now.  I had an issue with
+updating the gui at one point but I fixed that with some
+processevents or something.  That fixed displaying the txid.
+
+Ironed out a few other bugs I can't say I remember all of them.
+
+Notes -- Just ordered some hardware, I'm gonna start working on
+that soon.
+
+I guess I should add timeouts so it goes back to the first state.
+
+}
+
+v0.4 -- {
 
 Added/fixed transacting, transacting actually works.
 
@@ -22,6 +36,7 @@ Notes -- For some reason displaying the txid isn't working.
 price check work.]  FIXED before commit.  Connecting the fxn happened late.
 
 }
+
 v0.3 -- {
 
 Added threading for the occasional price checks.

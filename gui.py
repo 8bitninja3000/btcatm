@@ -12,7 +12,7 @@ from atratumgui import Ui_MainWindow
 import time
 
 
-legalagr="LEGALESELEGALESELEGALESELEGALESELEGALESELEGALESELEGALESELEGALESELELEGALESELEGALESELEGALESELEGALESELEGALESELEGALESELEGALESELEGALESELEGALESELEGALESELEGALESE Do you agree?"
+legalagr="Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Do you agree?"
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -35,6 +35,7 @@ class ImageDialog(QMainWindow):
         self.ui.setupUi(self)
         self.ui.no.clicked.connect(self.no)
         self.ui.yes.clicked.connect(self.yes)#build fxn
+        self.ui.Message.setWordWrap(True)
         self.thread=Worker()
         self.connect(self.thread, QtCore.SIGNAL("PL Call"), self.pl)
         self.lights=LWorker()
@@ -55,25 +56,34 @@ class ImageDialog(QMainWindow):
             if self.state == 3:
                 try:
                     HM=float(self.ui.BV.text())
+                    b=True
+                except:
+                    self.mess("Please give me a number. (: ")
+                    b=False
+                if b:
                     print "we got our number",HM
                     print "first",HM <= float(self.ullim)
                     print "second",HM >= float(self.llim)
                     if HM <= float(self.ullim) and HM >= float(self.llim):
                         print "conditions satisfied"
                         self.changestate(4)
-                        self.ui.Message.setText("Sending transaction...")
-                        self.txid=bitcoinc2.sendt(self.curad, HM)### work here next 4-16
-                        self.ui.Message.setText("Transaction complete.  ID: %s" % self.txid)
-                        time.sleep(5)
+                        print "this should be four:",self.state
+                        self.mess("Sending transaction...")
+                        app.processEvents()
+                        self.txid=bitcoinc2.sendt(self.curad, HM)
+                        self.mess("Transaction complete.  ID: %s" % self.txid)
+                        app.processEvents()
+                        time.sleep(10)
                         self.changestate(0)
                         return
-                    else:
-                        self.ui.Message.setText("Invalid number...")
-                        return
-                except Exception,e:
-                    print str(e)
-                    self.ui.Message.setText("Please, a number.")
-                    return
+                        
+                self.mess("Invalid number...")
+                return
+                
+    def mess(self, mess):
+        print "Setting message to",mess
+        self.ui.Message.setText(mess)
+        
     def no(self):
         print "No, state " +str(self.state)
         if True:#self.enough:
@@ -89,26 +99,30 @@ class ImageDialog(QMainWindow):
             if self.state == 3:
                 try:
                     HM=float(self.ui.BV.text())
+                    b=True
+                except:
+                    self.mess("Please give me a number. (: ")
+                    b=False
+                if b:
                     print "we got our number",HM
                     print "first",HM <= float(self.ullim)
                     print "second",HM >= float(self.llim)
                     if HM <= float(self.ullim) and HM >= float(self.llim):
                         print "conditions satisfied"
                         self.changestate(4)
-                        self.ui.Message.setText("Sending transaction...")
-                        self.txid=bitcoinc2.sendt(self.curad, HM)### work here next 4-16
-                        print "the gui has the txid:",self.txid
-                        self.ui.Message.setText("Transaction complete.  ID: %s" % self.txid)
-                        time.sleep(5)
+                        print "this should be four:",self.state
+                        self.mess("Sending transaction...")
+                        app.processEvents()
+                        self.txid=bitcoinc2.sendt(self.curad, HM)
+                        self.mess("Transaction complete.  ID: %s" % self.txid)
+                        app.processEvents()
+                        time.sleep(10)
                         self.changestate(0)
                         return
-                    else:
-                        self.ui.Message.setText("Invalid number...")
-                        return
-                except Exception,e:
-                    print str(e)
-                    self.ui.Message.setText("Please, a number.")
-                    return
+                        
+                self.mess("Invalid number...")
+                return
+                
     def scansom(self):#take more pictures
         bitcoinc2.takepic()
         got=False
@@ -118,9 +132,9 @@ class ImageDialog(QMainWindow):
                 self.curad=a
                 got=True
         if not got:
-            self.ui.Message.setText("Please scan again")
+            self.mess("Please scan again")
         else:
-            self.ui.Message.setText("Are you sure it's "+self.curad+"?")
+            self.mess("Are you sure it's "+self.curad+"?")
             self.changestate(1)
     def pl(self):
         plt=bitcoinc2.getp()
@@ -138,7 +152,7 @@ class ImageDialog(QMainWindow):
         else:
             self.ui.price.setText("Price: %.2f USD/BTC--OUT OF STOCK" % float(plt[0]))
             self.ui.timestamp.setText("OUT OF STOCK as of %s" % self.stamp)
-            self.ui.Message.setText("Sorry, we are out of stock, but we should be back soon.")
+            self.mess("Sorry, we are out of stock, but we should be back soon.")
 
     
     def changestate(self,state):
@@ -149,17 +163,16 @@ class ImageDialog(QMainWindow):
             font.setPointSize(14)
             font.setFamily(_fromUtf8("Garamond"))
             self.ui.Message.setFont(font)
-            self.ui.Message.setText("Press any button to scan the qr code.")
+            self.mess("Press any button to scan the qr code.")
         if state == 2:
             font = QtGui.QFont()
             font.setFamily(_fromUtf8("Garamond"))
             font.setPointSize(10)
             self.ui.Message.setFont(font)
-            self.ui.Message.setText(legalagr)
+            self.mess(legalagr)
         if state == 3:
-            self.ui.Message.setText("Insert $1 or $5 bills, then press either button to initiate the transaction.")
+            self.mess("Insert $1 or $5 bills, then press either button to initiate the transaction.")
             #Here some of the code here is rather psuedo considering the lack of bill validator...
-
         ######## Maybe add stuff to mess with lights ############
     
 class Worker(QThread):
@@ -173,7 +186,7 @@ class Worker(QThread):
     def run(self):
         print "Got called."
         self.emit(QtCore.SIGNAL("PL Call"))
-        time.sleep(200)
+        time.sleep(600)
         self.run()
         
     
@@ -216,6 +229,6 @@ if __name__=="__main__":
     x=ImageDialog()
 
 
-    x.show()#FullScreen()
+    x.showFullScreen()
     
     sys.exit(app.exec_())

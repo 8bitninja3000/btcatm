@@ -14,6 +14,16 @@ from blockchain.wallet import Wallet
 from blockchain import exchangerates
 import random
 
+try:
+    import notifytext
+    text=True
+    print "texting module import successfully"
+except:
+    text=False
+    print "texting module not present"
+    
+wanttext=False
+
 host = "localhost"
 port = 1234
 secret = "PLACEHOLDERCHANGEMELAYTAH"     #encryption key
@@ -160,7 +170,22 @@ def transact(adr,amt):
     for x in a:
         if x.balance == 0 and x.total_received != 0:
             wallet.archive_address(x.address)
-            
+    if text and wanttext:
+        nb=float(wallet.get_balance())/(100000000*exchangerates.to_btc("USD",1))
+        notifytext.trans(adr, amt, nb)
+        urg=0
+        if nb<5:
+            urg=5
+        elif nb<10:
+            urg=4
+        elif nb<20:
+            urg=3
+        elif nb<50:
+            urg=2
+        elif nb<100:
+            urg=1
+        if urg:
+            notifytext.low(nb, urg)
     return payment.tx_hash
     
 
