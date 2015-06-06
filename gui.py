@@ -12,7 +12,7 @@ from atratumgui import Ui_MainWindow
 import time
 
 
-legalagr="Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Do you agree?"
+legalagr="LegalesePlaceholder Legalese Legalese Legalese Legalese Legalese Legalese LegalesePlaceholder Legalese Legalese Legalese Legalese Legalese Legalese LegalesePlaceholder Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese LegalesePlaceholder Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Legalese Do you agree?"
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8

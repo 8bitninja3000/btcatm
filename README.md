@@ -9,6 +9,14 @@ Please change the server pass, if you value your security.
 
 So it works off of AES encryption and decryption, and keywords at the start.
 #################################################
+
+v1.01 -- {
+
+To be absolutely honest idk what I changed but it was super minor
+
+Next once some hardware arrives I'm gonna start adding in that stuff
+
+}
 v1.0 -- {
 
 Hey it's actually fully working now.  I had an issue with
